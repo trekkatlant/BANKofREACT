@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./components/Home";
 import UserProfile from "./components/UserProfile";
+import Login from "./components/Login";
 import './App.css';
 
 class App extends React.Component {
@@ -16,9 +17,18 @@ class App extends React.Component {
     }
   };
 
+  mockLogin = (loginInfo) => {
+    const newUser = {...this.state.currentUser}
+    newUser.userName = loginInfo.username
+    this.setState({
+      currentUser: newUser
+    })
+  };
+
   render() {
     const HomeComponent = () => (<Home accountBalance={this.state.accountBalance}/>);
     const UserProfileComponent = () => (<UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince}/>);
+    const LoginComponent = () => (<Login user={this.state.currentUser} mockLogin={this.mockLogin} {...this.props}/>)
     return(
       <Router>
         <div>
