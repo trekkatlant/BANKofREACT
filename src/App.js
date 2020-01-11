@@ -18,8 +18,7 @@ class App extends React.Component {
 
   render() {
     const HomeComponent = () => (<Home accountBalance={this.state.accountBalance}/>);
-    const UserProfileComponent = () => (<UserProfile userName={this.state.currentUser.userName} 
-                              memberSince={this.state.currentUser.memberSince}/>);
+    const UserProfileComponent = () => (<UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince}/>);
     return(
       <Router>
         <div>
