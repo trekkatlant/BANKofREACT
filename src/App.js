@@ -58,7 +58,35 @@ class App extends React.Component {
       accountBalance: creditTotal - debitTotal
     })
   };
-  
+  handleAddCredit = (item, amount) => {
+    let currBalance = this.state.accountBalance
+    let newCredits = this.state.credits.concat([{
+      description: item,
+      amount: amount,
+      date: new Date().toLocaleDateString()
+    }]);
+    let newTotal = this.state.creditTotal + parseInt(amount)
+    this.setState({
+      credits: newCredits,
+      creditTotal: newTotal,
+      accountBalance: currBalance + newTotal
+    })
+  };
+  handleAddDebit = (item, amount) => {
+    let currBalance = this.state.accountBalance
+    let newDebits = this.state.debits.concat([{
+      description: item,
+      amount: amount,
+      date: new Date().toLocaleDateString()
+    }]);
+    let newTotal = this.state.debitTotal + parseInt(amount)
+    this.setState({
+      debits: newDebits,
+      debitTotal: newTotal,
+      accountBalance: currBalance - newTotal
+    }) 
+  };
+
 
   render() {
     const HomeComponent = () => (<Home accountBalance={this.state.accountBalance}/>);
