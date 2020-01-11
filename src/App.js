@@ -19,8 +19,8 @@ class App extends React.Component {
       },
       debits: [],
       credits: [],
-      debitTotal: 0,
-      creditTotal: 0,
+      debitsTotal: 0,
+      creditsTotal: 0,
     }
   };
   mockLogin = (loginInfo) => {
@@ -36,7 +36,7 @@ class App extends React.Component {
       total += i.amount
     }
     this.setState({
-      debitTotal: total
+      debitsTotal: total
     })
   };
   calculateCredits = () => {
@@ -45,20 +45,20 @@ class App extends React.Component {
       total += i.amount
     }
     this.setState({
-      creditTotal: total
+      creditsTotal: total
     })
   };
   calculateAccountBalance = () => {
-    let debitTotal = 0
-    let creditTotal = 0
+    let debitsTotal = 0
+    let creditsTotal = 0
     for(let i of this.state.debits) {
-      debitTotal += i.amount
+      debitsTotal += i.amount
     }
     for(let i of this.state.credits) {
-      creditTotal += i.amount
+      creditsTotal += i.amount
     }
     this.setState({
-      accountBalance: creditTotal - debitTotal
+      accountBalance: creditsTotal - debitsTotal
     })
   };
   handleAddCredit = (item, amount) => {
@@ -68,10 +68,10 @@ class App extends React.Component {
       amount: amount,
       date: new Date().toLocaleDateString()
     }]);
-    let newTotal = this.state.creditTotal + parseInt(amount)
+    let newTotal = this.state.creditsTotal + parseInt(amount)
     this.setState({
       credits: newCredits,
-      creditTotal: newTotal,
+      creditsTotal: newTotal,
       accountBalance: currBalance + newTotal
     })
   };
@@ -82,22 +82,12 @@ class App extends React.Component {
       amount: amount,
       date: new Date().toLocaleDateString()
     }]);
-    let newTotal = this.state.debitTotal + parseInt(amount)
+    let newTotal = this.state.debitsTotal + parseInt(amount)
     this.setState({
       debits: newDebits,
-      debitTotal: newTotal,
+      debitsTotal: newTotal,
       accountBalance: currBalance - newTotal
     }) 
-  };
-  async getDebits() {
-    await axios.get("https://moj-api.herokuapp.com/debits")
-    .then(respone => {
-      let res = response.data
-      this.setState({
-        debits: res
-      })
-    })
-    .catch(err => console.log(err))
   };
   async getCredits() {
     await axios.get("https://moj-api.herokuapp.com/credits")
@@ -109,15 +99,30 @@ class App extends React.Component {
     })
     .catch(err => console.log(err))
   };
+  async getDebits() {
+    await axios.get("https://moj-api.herokuapp.com/debits")
+    .then(respone => {
+      let res = response.data
+      this.setState({
+        debits: res
+      })
+    })
+    .catch(err => console.log(err))
+  };
   render() {
     const HomeComponent = () => (<Home accountBalance={this.state.accountBalance}/>);
     const UserProfileComponent = () => (<UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince}/>);
     const LoginComponent = () => (<Login user={this.state.currentUser} mockLogin={this.mockLogin} {...this.props}/>)
+    const CreditsComponent = () => (<Credits accountBalance={this.state.accountBalance} credits={this.state.credits} creditsTotal={this.state.creditsTotal} handleAddCredit={this.handleAddCredit}/>)
+    const DebitsComponent = () => (<Debits accountBalance={this.state.accountBalance} debits={this.state.debits} debitsTotal={this.state.debitsTotal} handleAddDebit={this.handleAddDebit}/>)
     return(
       <Router>
         <div>
-          <Route exact path="/" render={HomeComponent}/>
+          <Route exact path="/" render={LoginComponent}/>
           <Route exact path="/userProfile" render={UserProfileComponent}/>
+          <Route exact path="/home"  render={HomeComponent}/>
+          <Route exact path="/debits" render={DebitsComponent}/>
+          <Route exact path="/credits" render={CreditsComponent}/>
         </div>
       </Router>
     );
