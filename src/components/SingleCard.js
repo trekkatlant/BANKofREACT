@@ -1,6 +1,6 @@
 import React from "react";
 
-class SingleCredit extends React.Component {
+class SingleCard extends React.Component {
     render() {
         return (
             <div>
@@ -14,4 +14,4 @@ class SingleCredit extends React.Component {
     }
 }
 
-export default SingleCredit;
+export default SingleCard;
