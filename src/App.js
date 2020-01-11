@@ -41,7 +41,7 @@ class App extends React.Component {
   };
   calculateCredits = () => {
     let total =0
-    for(i of this.state.credits) {
+    for(let i of this.state.credits) {
       total += i.amount
     }
     this.setState({
@@ -91,7 +91,7 @@ class App extends React.Component {
   };
   async getCredits() {
     await axios.get("https://moj-api.herokuapp.com/credits")
-    .then(respone => {
+    .then(response => {
       let res = response.data
       this.setState({
         credits: res
@@ -101,7 +101,7 @@ class App extends React.Component {
   };
   async getDebits() {
     await axios.get("https://moj-api.herokuapp.com/debits")
-    .then(respone => {
+    .then(response => {
       let res = response.data
       this.setState({
         debits: res

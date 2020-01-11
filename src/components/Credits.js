@@ -43,7 +43,7 @@ class Credits extends React.Component {
                         </div>
                         <div>
                             <label htmlFor="Amount">Amount: </label>
-                            <input type="text" onChange={history.handleAmountChange}/>
+                            <input type="text" onChange={this.handleAmountChange}/>
                         </div>
                         <button>Add Credit</button>
                     </form>
