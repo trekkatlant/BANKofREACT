@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./components/Home";
 import UserProfile from "./components/UserProfile";
 import Login from "./components/Login";
+import Debits from "./components/Debits";
+import Credits from "./components/Credits";
+import axios from "axios";
 import './App.css';
 
 class App extends React.Component {
@@ -86,8 +89,26 @@ class App extends React.Component {
       accountBalance: currBalance - newTotal
     }) 
   };
-
-
+  async getDebits() {
+    await axios.get("https://moj-api.herokuapp.com/debits")
+    .then(respone => {
+      let res = response.data
+      this.setState({
+        debits: res
+      })
+    })
+    .catch(err => console.log(err))
+  };
+  async getCredits() {
+    await axios.get("https://moj-api.herokuapp.com/credits")
+    .then(respone => {
+      let res = response.data
+      this.setState({
+        credits: res
+      })
+    })
+    .catch(err => console.log(err))
+  };
   render() {
     const HomeComponent = () => (<Home accountBalance={this.state.accountBalance}/>);
     const UserProfileComponent = () => (<UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince}/>);
