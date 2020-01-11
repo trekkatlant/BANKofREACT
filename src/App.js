@@ -13,10 +13,13 @@ class App extends React.Component {
       currentUser: {
         userName: "bob_hu",
         memberSince: "4/20/69"
-      }
+      },
+      debits: [],
+      credits: [],
+      debitTotal: 0,
+      creditTotal: 0,
     }
   };
-
   mockLogin = (loginInfo) => {
     const newUser = {...this.state.currentUser}
     newUser.userName = loginInfo.username
@@ -24,6 +27,38 @@ class App extends React.Component {
       currentUser: newUser
     })
   };
+  calculateDebits = () => {
+    let total =0
+    for(let i of this.state.debits) {
+      total += i.amount
+    }
+    this.setState({
+      debitTotal: total
+    })
+  };
+  calculateCredits = () => {
+    let total =0
+    for(i of this.state.credits) {
+      total += i.amount
+    }
+    this.setState({
+      creditTotal: total
+    })
+  };
+  calculateAccountBalance = () => {
+    let debitTotal = 0
+    let creditTotal = 0
+    for(let i of this.state.debits) {
+      debitTotal += i.amount
+    }
+    for(let i of this.state.credits) {
+      creditTotal += i.amount
+    }
+    this.setState({
+      accountBalance: creditTotal - debitTotal
+    })
+  };
+  
 
   render() {
     const HomeComponent = () => (<Home accountBalance={this.state.accountBalance}/>);
