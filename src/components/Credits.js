@@ -26,7 +26,7 @@ class Credits extends React.Component {
     };
     render() {
         let credits = []
-        for(let i of this.props.debits) {
+        for(let i of this.props.credits) {
             credits.push(<SingleCredit description={i.description} amount={i.amount} date={i.date}/>);
         }
         return(

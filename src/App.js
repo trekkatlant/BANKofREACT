@@ -23,12 +23,19 @@ class App extends React.Component {
       creditsTotal: 0,
     }
   };
+  componentDidMount = () => {
+    this.getCredits();
+    this.getDebits();
+  };
   mockLogin = (loginInfo) => {
     const newUser = {...this.state.currentUser}
     newUser.userName = loginInfo.username
     this.setState({
       currentUser: newUser
     })
+    this.calculateCredits();
+    this.calculateDebits();
+    this.calculateAccountBalance();
   };
   calculateDebits = () => {
     let total =0

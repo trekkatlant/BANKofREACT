@@ -8,7 +8,9 @@ class Home extends React.Component {
             <div>
                 <img src="https://www.moneycrashers.com/wp-content/uploads/2012/04/reasons-change-banks-1068x713.jpg" alt="bank" width="690" height="420"/>
                 <h1>Bank of React</h1>
-                <Link to="/userProfile">User Profile</Link>
+                <Link to="/userProfile">User Profile</Link><br/>
+                <Link to="/debits">Debits</Link><br/>
+                <Link to="/credits">Credits</Link><br/>
                 <AccountBalance accountBalance={this.props.accountBalance}/>
             </div>
         );
